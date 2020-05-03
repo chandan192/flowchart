@@ -1,0 +1,137 @@
+<form [formGroup]="form">
+  <div class="ui-g">
+    <div class="ui-g-4">
+      <label>Name</label>
+    </div>
+    <div class="ui-g-8">
+      <input type="text" pInputText [formControlName]="'name'">
+    </div>
+  </div>
+  <div class=" ui-g">
+    <div class="ui-g-4">
+      <label>Type</label>
+    </div>
+    <div class="ui-g-8">
+      <p-dropdown [options]="dataType" [formControlName]="'type'" [placeholder]="'Select Type'"></p-dropdown>
+    </div>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-4">
+      <label>Source</label>
+    </div>
+    <div class="ui-g-8">
+      <p-dropdown [options]="dataSource" appendTo="body" [formControlName]="'source'" [placeholder]="'Select Type'">
+      </p-dropdown>
+    </div>
+  </div>
+
+  <div class="ui-g" *ngIf='form.value.source == "ele"'>
+    <div class="ui-g-4">
+      <span>CSS Selector</span>
+    </div>
+    <div class="ui-g-6">
+      <input type="text" pInputText [formControlName]="'cssSelector'">
+    </div>
+  </div>
+  <div class="ui-g" *ngIf='form.value.source == "ele"'>
+    <div class="ui-g-4">
+      <span>Element Property</span>
+    </div>
+    <div class="ui-g-6">
+      <p-dropdown placeholder='Select Property' appendTo="body" [options]="eleProperty" [formControlName]="'property'">
+      </p-dropdown>
+    </div>
+  </div>
+  <div class="ui-g" *ngIf='form.value.source == "ele" && form.value.property == "attribute"'>
+    <div class="ui-g-4">
+      <span>Attribute Name</span>
+    </div>
+    <div class="ui-g-6">
+      <input type="text" pInputText [formControlName]="'attributeName'">
+    </div>
+  </div>
+  <div class="ui-g" *ngIf='form.value.source == "ele" && form.value.property == "style"'>
+    <div class="ui-g-4">
+      <span>Style Properties</span>
+    </div>
+    <div class="ui-g-6">
+      <p-dropdown placeholder='Select Style Property' appendTo="body" [style]="{'width': '150px'}" [options]="eleStyle"
+        [formControlName]="'elementStyle'">
+      </p-dropdown>
+    </div>
+  </div>
+  <div class="ui-g" *ngIf='form.value.source == "url"'>
+    <div class="ui-g-4">
+      <span>Url Properties</span>
+    </div>
+    <div class="ui-g-6">
+      <p-dropdown placeholder='Select Url Property' appendTo="body" [style]="{'width': '150px'}"
+        [options]="urlProperties" [formControlName]="'urlProperty'">
+      </p-dropdown>
+    </div>
+  </div>
+  <div class="ui-g" *ngIf='form.value.source == "cookie"'>
+    <div class="ui-g-4">
+      <span>Cookie Name</span>
+    </div>
+    <div class="ui-g-6">
+      <input type="text" pInputText [formControlName]="'cookieName'">
+    </div>
+  </div>
+  <div class="ui-g" *ngIf='form.value.source == "code"'>
+    <div class="ui-g-4">
+      <span>code snippet</span>
+    </div>
+    <div class="ui-g-6">
+      open editor ... <span style="float:right;font-size: 16px;cursor:pointer;" (click)="openEditor = true">
+        <i class="fa fa-pencil-square-o" title="open Editor"></i></span>
+    </div>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-4">
+      <label>Pattern</label>
+    </div>
+    <div class="ui-g-8">
+      <input type="text" pInputText [formControlName]="'pattern'">
+    </div>
+  </div>
+
+  <div class="ui-g" [formGroup]="testForm">
+    <div class="ui-g-4">
+      <i>Test Pattern</i>
+    </div>
+    <div class="ui-g-8">
+      <input type="text" pInputText formControlName="testStr">&nbsp;
+      <button pButton label="Test" type="button" (click)="testPattern()"></button>
+      <div>
+        <i *ngIf="isTesting" [ngStyle]="{'color': matchedCount > 0 ?'green':'red'}">{{matchedCount +' Matches.'}}</i>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="ui-g">
+    <div class="ui-g-4">
+      <label>Pattern Index</label>
+    </div>
+    <div class="ui-g-8">
+      <p-dropdown [options]="indexOption" appendTo="body" [formControlName]="'patternIndex'"
+        [placeholder]="'Select Index'"></p-dropdown>
+    </div>
+  </div>
+  <div class="ui-g" *ngIf='form.value.patternIndex == "Index"'>
+    <div class="ui-g-4">
+      <label>Index</label>
+    </div>
+    <div class="ui-g-8">
+      <input type="text" pInputText [formControlName]="'index'">
+    </div>
+  </div>
+  <!--submit button-->
+  <div class="ui-g">
+    <div class="ui-g-7 ui-g-offset-5">
+      <button type="submit" pButton label="{{updateDatapoint ==''?'Submit':'Update'}}" [disabled]="!form.valid"
+        [style]="{float: 'left'}" (click)="onSubmit(updateDatapoint=='' ? 'submit':'update')"></button>
+    </div>
+  </div>
+</form>

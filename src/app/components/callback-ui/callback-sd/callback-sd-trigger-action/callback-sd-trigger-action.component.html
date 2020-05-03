@@ -1,0 +1,110 @@
+<div *ngIf="!currentState">
+  <p-fieldset [style]="{'height': '75vh'}">
+    <div>
+      No State Selected.
+    </div>
+  </p-fieldset>
+</div>
+<div *ngIf="currentState" style="height: 66vh;">
+  <p-fieldset [style]="{'height': '75vh'}" legend="{{currentState.text}}">
+    <div class="text-center">
+      <div class="cav-bdr cav-mb-2">
+        <div class="callback-panel cav-p-2 bg-gray cav-bdr-bottom-1">
+          <label>Trigger's</label>
+          <i class="fa fa-plus-circle" title="Add Trigger" (click)="openDialogTrigger('add')"></i>
+        </div>
+        <div class="ui-g" style="max-height: 23vh;" *ngIf="triggerList.length">
+          <mat-selection-list #list style="width: 100%;">
+            <mat-list-option *ngFor="let trigger of triggerList">
+              <div class="ui-g">
+                <div class="ui-g-9" style="text-overflow: ellipsis;overflow: hidden;">
+                  <label title="{{trigger.name + '(' + trigger.type +  ')' }}">
+                    {{trigger.name + '(' + trigger.type +  ')' }}</label>
+                </div>
+                <div class="ui-g-3" style="padding-right: 0px;">
+                  <i class="pi pi-pencil" title="{{'edit '+ trigger.name}}" (click)="editTrigger(trigger)"
+                    style="line-height: 1.2;float: left;"></i>
+
+                  <i class="pi pi-trash" title="{{'delete '+ trigger.name}}" (click)="deleteTrigger(trigger.id)"
+                    style="float: right;"></i>
+                </div>
+                <!-- <i class="fa fa-pencil-square-o" title="Edit trigger"></i> -->
+              </div>
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+        <div *ngIf="triggerList.length < 1" class="cav-p-2 cav-fnt-12">
+          No Action Added...
+        </div>
+      </div>
+
+
+      <div class="cav-bdr cav-mb-2">
+        <div class="callback-panel cav-p-2 bg-gray">
+          <label>Action's</label>
+          <i class="fa fa-plus-circle" title="Add Action" (click)="openDialogAction(null)"></i>
+        </div>
+
+        <!-- <div class="ui-g" style="background: #dce9ea;height: 25px;border-radius: 4px;padding: 4px;">
+        <label>Action's</label>
+        <span style="margin-left: auto;" title="Add Action" (click)="openDialogAction()"><i
+            class="fa fa-plus-circle"></i></span>
+      </div> -->
+        <div class="ui-g" style="max-height: 23vh;" *ngIf="actionList.length">
+          <mat-selection-list #list style="width: 100%;">
+            <mat-list-option *ngFor="let action of actionList">
+              <div class="ui-g">
+                <div class="ui-g-8">
+                  <label (click)="openDialogAction(action.name)" style="cursor: pointer;">{{action.name}}</label>
+                </div>
+                <div class="ui-g-3 ui-g-offset-1">
+                  <i class="fa fa-pencil-square-o" (click)="openflowChart(action)" title="Edit Action"></i>
+                </div>
+              </div>
+            </mat-list-option>
+          </mat-selection-list>
+        </div>
+        <div *ngIf="actionList.length < 1" class="cav-p-2 cav-fnt-12">
+          No Trigger Added...
+        </div>
+      </div>
+    </div>
+  </p-fieldset>
+</div>
+
+<div>
+  <!-- <button type="button" (click)="openDialog()" pButton label="Open Dialog"></button>   -->
+  <p-dialog header="Add Trigger" [(visible)]="showTriggerDialog" appendTo="body" [contentStyle]="{'overflow':'visible'}"
+    [modal]="true" [responsive]="true" [style]="{width: '500px', minWidth: '250px'}" [minY]="70" [maximizable]="false"
+    [baseZIndex]="10000">
+    <app-sd-addtriggerdialog *ngIf="newTriggerName" [stateName]="stateName" [triggerName]="newTriggerName"
+      (success)="addTriggerNode($event)"></app-sd-addtriggerdialog>
+  </p-dialog>
+</div>
+
+<div>
+  <p-dialog header="Add Action" [(visible)]="showActionDialog" appendTo="body" [contentStyle]="{'overflow':'visible'}"
+    [modal]="true" [responsive]="true" [style]="{width: '500px', minWidth: '250px'}" [minY]="70" [maximizable]="false"
+    [baseZIndex]="10000" *ngIf="newActionName">
+
+    <div class="forms">
+      <label>Trigger</label>
+      <div class="input-box">
+        <p-dropdown [options]="triggerList" [(ngModel)]="selectedTriggerForAction" placeholder="Select Trigger"
+          optionLabel="name" [showClear]="true" class="my-select" [style]="{'width': '270px'}"></p-dropdown>
+      </div>
+      <label>Action Name</label>
+      <div class="input-box">
+        <input type="text" class="input-gui" disabled="disabled" [(ngModel)]="newActionName" style="width: 270px;" />
+      </div>
+      <label></label>
+      <div class="input-box">
+        <button type="button" (click)="submitAddAction()"
+          class="button-all cav-mb-4">{{updateAction === true ? 'Update':'Add'}}</button>
+      </div>
+    </div>
+
+  </p-dialog>
+</div>
+
+<p-menu #menu [popup]="true" [model]="items"></p-menu>

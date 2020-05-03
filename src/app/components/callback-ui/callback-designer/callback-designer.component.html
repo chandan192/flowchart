@@ -1,0 +1,172 @@
+<app-loader [busy]="showLoader" [z_index]="200"></app-loader>
+
+<p-toolbar>
+  <div class="topbar-left">
+    <i class="profilename">profile name</i>
+    <h2 class="h2style">{{callbackEntry?.profilename}}</h2>
+  </div>
+
+  <div class="topbar-right" style="width: 235px;text-align: right;">
+    <button pButton type="button" [icon]="opened ?'fa fa-angle-left':'fa fa-angle-right'" id="menu-button"
+      (click)="sidenav.toggle()"></button>
+    <button pButton type="button" label="Save" (click)="saveCallback()" style="margin-right: 5px;"
+      title="save callback"></button>
+    <button pButton type="button" label="Apply" class="ui-button-success" (click)="applyCallback()"
+      style="margin-right: 5px;" title="apply callback"></button>
+    <button pButton type=" button" icon="pi pi-refresh" class="ui-button-warning" style="margin-right: 10px;"
+      (click)="refreshCallback()" title="refresh"></button>
+  </div>
+</p-toolbar>
+
+<mat-sidenav-container style="top: 48px;">
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+    <div class="ui-g ui-fluid" style="width: 219px;">
+      <div class="ui-g-12">
+        <button pButton type="button" icon="pi pi-plus" label="Add Callback" (click)="addCallback()"
+          title="add new callback"></button>
+      </div>
+
+      <div class="ui-g-12">
+        <p-panelMenu [model]="callbackItems" [multiple]="false"></p-panelMenu>
+      </div>
+    </div>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+    <p-accordion class="custom-accord" [multiple]="false">
+      <p-accordionTab [selected]="!select">
+        <p-header>
+          State Diagram for : {{callbackEntry?.name}}
+
+          <div style="float: right;">
+            <!-- channel -->
+            <i class="material-icons">phonelink</i>&nbsp;
+            <ng-container *ngFor="let item of channels">
+              <span *ngIf="item.value == callbackEntry?.channel" style="vertical-align: top;">{{item.label}}</span>
+            </ng-container>
+
+
+            <!-- runAt -->
+            <i class="material-icons">directions_run</i>
+            <ng-container *ngFor="let item of onTriggerEvents">
+              <span *ngIf="item.value == callbackEntry?.type" style="vertical-align: top;"
+                title="{{'runAt: '+item.label}}">{{item.label}}</span>
+            </ng-container>
+          </div>
+        </p-header>
+
+
+        <div class="ui-g">
+          <div class="ui-g-10"
+            *ngIf="activeTabIndex === 0 || activeTabIndex === 1 || activeTabIndex === 2 || activeTabIndex === 3"
+            style="padding: 0">
+            <app-callback-sd (actionAdded)="actionAdded($event)" (stateAdded)="stateAdded($event)"
+              [currentState]="currentState" [action]="currentAction" [openFlag]="openFlag"
+              (openFlagChanged)="openFlagChanged($event)" [(activeTabIndex)]="activeTabIndex" [callback]="callback">
+            </app-callback-sd>
+          </div>
+          <div class="ui-g-2"
+            *ngIf="activeTabIndex === 0 || activeTabIndex === 1 || activeTabIndex === 2 || activeTabIndex === 3"
+            style="padding: 0">
+            <!-- <div class="ui-g" style=" background: #c0d3d6;height: 25px;border-radius: 4px;padding: 4px">
+                  <div class="ui-g-12" style="padding: 0px">
+                    <label>Trigger And Action</label>
+                  </div>
+                </div> -->
+            <div style="padding: 0 ;">
+              <app-callback-sd-trigger-action [currentState]="currentState" (currentAction)="currentActionGet($event)"
+                [callback]="callback">
+              </app-callback-sd-trigger-action>
+            </div>
+          </div>
+        </div>
+      </p-accordionTab>
+      <p-accordionTab header="Flowchart Diagram for : {{currentActionName}}" [(selected)]="select">
+        <div class="ui-g">
+          <div class="ui-g-2" style="z-index: 200;">
+            <app-callback-sidebar-menu [selectedTabIndex]="1" (loaded)="sidebarLoaded=true">
+            </app-callback-sidebar-menu>
+          </div>
+          <div class="ui-g-10">
+            <app-callback-flowchart [action]="currentAction" [callback]="callback">
+            </app-callback-flowchart>
+          </div>
+        </div>
+      </p-accordionTab>
+    </p-accordion>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- AddCallback Popup -->
+<p-dialog header="Add Callback" [modal]="true" appendTo="body" [contentStyle]="{'overflow':'visible'}"
+  [(visible)]="AddCallbackDialog" [style]="{width: '470px', minWidth: '370px' , minHeight: 'fit-content'}"
+  (onHide)="resetForm()">
+
+  <div class="ui-g ui-fluid">
+
+    <div class="ui-g-2 ui-g-offset-1">
+      <label>Name</label>
+    </div>
+    <div class="ui-g-7 ui-g-offset-1">
+      <input type="text" pInputText [(ngModel)]="name">
+    </div>
+    <div class="ui-g-offset-1"></div>
+
+    <div class="ui-g-2 ui-g-offset-1">
+      <label>Description</label>
+    </div>
+    <div class="ui-g-7 ui-g-offset-1">
+      <input type="text" pInputText [(ngModel)]="description">
+    </div>
+    <div class="ui-g-offset-1"></div>
+
+
+    <div class="ui-g-2 ui-g-offset-1">
+      <label>Execute On</label>
+    </div>
+    <div class="ui-g-7 ui-g-offset-1">
+      <p-dropdown placeholder="Select OnTrigger" appendTo="body" [options]="onTriggerEvents" [(ngModel)]="onTrigger">
+      </p-dropdown>
+    </div>
+    <div class="ui-g-offset-1"></div>
+
+
+    <div class="ui-g-2 ui-g-offset-1">
+      <label>Pages</label>
+    </div>
+    <div class="ui-g-7 ui-g-offset-1">
+      <p-multiSelect defaultLabel="Select Page" appendTo="body" [options]="pages" [(ngModel)]="pageid">
+      </p-multiSelect>
+    </div>
+    <div class="ui-g-offset-1"></div>
+
+
+    <div class="ui-g-2 ui-g-offset-1">
+      <label>Channel</label>
+    </div>
+    <div class="ui-g-7 ui-g-offset-1">
+      <p-dropdown placeholder="Select Channel" appendTo="body" [options]="channels" [(ngModel)]="channel"
+        (onChange)="onChange($event.value)">
+      </p-dropdown>
+    </div>
+    <div class="ui-g-offset-1"></div>
+
+
+    <div class="ui-g-2 ui-g-offset-1">
+      <label>Profile</label>
+    </div>
+    <div class="ui-g-7 ui-g-offset-1">
+      <p-dropdown placeholder="Select Profile" appendTo="body" [options]="profiles" [(ngModel)]="profile">
+      </p-dropdown>
+    </div>
+    <div class="ui-g-offset-1"></div>
+
+
+    <div class="ui-g-12" style="text-align: center;">
+      <button type="button" pButton (click)="addCallbackData()" label="Save" style="width: auto;"></button>
+    </div>
+  </div>
+
+</p-dialog>

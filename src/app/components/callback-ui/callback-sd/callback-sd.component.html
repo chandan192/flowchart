@@ -1,0 +1,56 @@
+<!-- <button mat-raised-button (click)="drawer2.open()">Toggle</button> -->
+<div class="p-1" jsplumb-palette selector=".drag" surfaceId="callbackSDSurface" [typeExtractor]="typeExtractor"
+  [dataGenerator]="dataGenerator">
+  <button pButton class="drag" [attr.jtk-node-type]="sdToolbarTreeData[0].data.type" title="Drag to add action api"
+    [attr.jtk-width]="sdToolbarTreeData[0].data.w" [attr.jtk-height]="sdToolbarTreeData[0].data.h" label="State"
+    icon="pi pi-plus"></button>
+</div>
+
+<div class="ui-g-12" style="margin-right: -128px;height: 100%;">
+  <jsplumb-surface [surfaceId]="surfaceId" [toolkitId]="toolkitId" [view]="view" [renderParams]="renderParams"
+    [nodeResolver]="resolveNode"></jsplumb-surface>
+</div>
+<jsplumb-miniview [surfaceId]="surfaceId"></jsplumb-miniview>
+<jsplumb-controls [surfaceId]="surfaceId"></jsplumb-controls>
+
+
+<!-- Trigger Dialog -->
+<!-- <button type="button" (click)="openDialog()" pButton label="Open Dialog"></button>   -->
+<p-dialog header="Add Trigger" [(visible)]="showTriggerDialog" appendTo="body" [contentStyle]="{'overflow':'visible'}"
+  [modal]="true" [responsive]="true" [style]="{width: '500px', minWidth: '250px'}" [minY]="70" [maximizable]="false"
+  [baseZIndex]="10000">
+  <app-sd-addtriggerdialog *ngIf="newTriggerName" [states]="callback.states" [triggerName]="newTriggerName"
+    (success)="addTriggerNode($event)"></app-sd-addtriggerdialog>
+</p-dialog>
+
+
+<p-dialog header="Add Action" [(visible)]="showActionDialog" appendTo="body" [contentStyle]="{'overflow':'visible'}"
+  [modal]="true" [responsive]="true" [style]="{width: '500px', minWidth: '250px'}" [minY]="70" [maximizable]="false"
+  [baseZIndex]="10000" *ngIf="newActionName">
+  <!-- Trigger Input-->
+  <div class="ui-g">
+    <div class="ui-g-4 label">
+      <label for="State Name">Trigger</label>
+    </div>
+    <div class="ui-g-8 field">
+      <p-dropdown [options]="callback.triggers" [(ngModel)]="selectedTriggerForAction" placeholder="Select Trigger"
+        optionLabel="name" [showClear]="true"></p-dropdown>
+      <!--<input pInputText type="text" size="20" disabled="disabled" [(ngModel)]="stateName"/>-->
+    </div>
+  </div>
+  <!--Action Name-->
+  <div class="ui-g">
+    <div class="ui-g-4 label">
+      <label>Action Name</label>
+    </div>
+    <div class="ui-g-8 field">
+      <input pInputText type="text" size="20" disabled="disabled" [(ngModel)]="newActionName" />
+    </div>
+  </div>
+  <!--Button to add -->
+  <div class="ui-g">
+    <div class="ui-g-7 ui-g-offset-5">
+      <button type="button" (click)="submitAddAction()" pButton label="Add" [style]="{float: 'left'}"></button>
+    </div>
+  </div>
+</p-dialog>

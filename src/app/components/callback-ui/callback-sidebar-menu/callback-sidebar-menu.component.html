@@ -1,0 +1,122 @@
+<div class="p-1" [style.display]="selectedTabIndex === 0 || selectedTabIndex === 3?'block':'none'" jsplumb-palette
+  selector=".drag" surfaceId="callbackSDSurface" [typeExtractor]="typeExtractor" [dataGenerator]="dataGenerator">
+  <span class="drag " [attr.jtk-node-type]="sdToolbarTreeData[0].data.type" title="Drag to add action api"
+    [attr.jtk-width]="sdToolbarTreeData[0].data.w" [attr.jtk-height]="sdToolbarTreeData[0].data.h">state</span>
+</div>
+
+
+<!-- <p-accordion [multiple]="true">
+  <p-accordionTab [selected]="true" header="Tooolbar">
+    <p-header>Toolbar</p-header> -->
+<!--Control for State diagram-->
+<!-- <div class="p-1" [style.display]="selectedTabIndex === 0 || selectedTabIndex === 3?'block':'none'" jsplumb-palette
+      selector=".drag" surfaceId="callbackSDSurface" [typeExtractor]="typeExtractor" [dataGenerator]="dataGenerator"
+      style="width: 104%; max-height: 80vh; font-size: 1.5rem;overflow-y: auto">
+      <span class="drag" [attr.jtk-node-type]="sdToolbarTreeData[0].data.type" title="Drag to add action api"
+        [attr.jtk-width]="sdToolbarTreeData[0].data.w" [attr.jtk-height]="sdToolbarTreeData[0].data.h">state</span> -->
+
+<!-- <p-tree [value]="sdToolbarTreeData">
+        <ng-template let-node pTemplate="default">
+          <span class="drag" [attr.jtk-node-type]="node.data.type" title="Drag to add action api"
+            [attr.jtk-width]="node.data.w" [attr.jtk-height]="node.data.h">{{node.label}}</span><br>
+        </ng-template>
+      </p-tree> -->
+<!-- </div> -->
+
+<!--Controls for Flow chart-->
+<!--jsplumb-palette selector="li" surfaceId="callbackSDSurface" These attributes are for jsplumb drag/drop.-->
+<!--For padding of 1.5rem-->
+<div [style.display]="selectedTabIndex === 1?'block':'none'" class="p-1" jsplumb-palette selector=".drag"
+  surfaceId="callbackFlowchartSurface" [typeExtractor]="typeExtractor" [dataGenerator]="dataGenerator">
+  <!--Render api using tree. -->
+
+
+  <!-- <nav class="navigation">
+    <ul class="mainmenu">
+      <li><span class="drag" [attr.jtk-node-type]="'question'" [attr.jtk-width]="180" [attr.jtk-height]="70"
+          title="Drag to add action api">Condition
+        </span></li>
+      <li><span>SPA</span>
+        <ul class="submenu" style="margin-left: 10px">
+          <li><span>Page Transition Start</span></li>
+          <li><span>Page Transition End</span></li>
+        </ul>
+      </li>
+      <li><span>State</span></li>
+      <li><span>Session_Data</span></li>
+      <li><span>LoginId</span></li>
+      <li><span>SessionId</span></li>
+      <li><span>LogEvent</span></li>
+      <li><span>Contact us</span></li>
+    </ul>
+  </nav> -->
+
+  <!-- <button mat-button [matMenuTriggerFor]="fp">API</button>
+  <mat-menu #fp="matMenu">
+    <span>
+      <span mat-menu-item>{{fpToolbarTreeData[0].label}}</span>
+      <span mat-menu-item [matMenuTriggerFor]="subMenu">{{fpToolbarTreeData[1].label}}</span>
+    </span> -->
+  <!-- <span mat-menu-item [matMenuTriggerFor]="invertebrates">SPA</span> -->
+  <!-- </mat-menu>
+
+  <mat-menu #subMenu="matMenu">
+    <span *ngFor="let submenu of fpToolbarTreeData[1].children ; let i = index;">
+      <button mat-menu-item [matMenuTriggerFor]="subMenu">{{submenu.label}}</button>
+    </span>
+  </mat-menu> -->
+
+  <!-- <p-panelMenu [model]="items1" [style]="{'font-size':'13px', 'width':'12.5em'}"></p-panelMenu> -->
+  <p-tieredMenu appendTo="body" [model]="items1" [baseZIndex]="10001" [style]="{'font-size': '13px'}">
+    <!--  -->
+  </p-tieredMenu>
+
+
+  <p-tieredMenu appendTo="body" [model]="items2" [baseZIndex]="10000" [style]="{'font-size': '13px'}">
+    <!-- <ng-template let-node pTemplate="default">
+      <span *ngIf="node.data.type === 'question'" class="drag" [attr.jtk-node-type]="'question'"
+        title="Drag to add action api" [attr.jtk-width]="180" [attr.jtk-height]="70">{{node.label}}</span>
+      <span *ngIf="node.data.type === 'folder'">{{node.label}}</span>
+      <span *ngIf="node.data.api" class="action-api drag" [attr.api]="node.data.id" [attr.jtk-node-type]="'action'"
+        title="Drag to add action api" [attr.jtk-width]="180" [attr.jtk-height]="70">{{node.label}}</span>
+    </ng-template> -->
+  </p-tieredMenu>
+
+
+  <!-- <p-tree [value]="fpToolbarTreeData" [filter]="true">
+    <ng-template let-node pTemplate="default">
+      <span *ngIf="node.data.type === 'question'" class="drag" [attr.jtk-node-type]="'question'"
+        title="Drag to add action api" [attr.jtk-width]="180" [attr.jtk-height]="70">{{node.label}}</span>
+      <span *ngIf="node.data.type === 'folder'">{{node.label}}</span>
+      <span *ngIf="node.data.api" class="action-api drag" [attr.api]="node.data.id" [attr.jtk-node-type]="'action'"
+        title="Drag to add action api" [attr.jtk-width]="180" [attr.jtk-height]="70">{{node.label}}</span>
+    </ng-template>
+  </p-tree> -->
+
+</div>
+
+<p-dialog [(visible)]="showExtractDialog" appendTo="body" [style]="{'min-width':'410px' , 'left':' 492px'}"
+  [contentStyle]="{'overflow':'visible'}" (onHide)="resetForm()">
+  <p-header>Extract Data</p-header>
+  <app-extractdata (extractedData)="ectractedDataPoint($event)" [updateDatapoint]="updateDatapoint" #extractdata>
+  </app-extractdata>
+</p-dialog>
+
+
+<p-dialog [(visible)]="showLocalVarDialog" appendTo="body">
+  <p-header>Local Variable</p-header>
+  <div class="ui-g">
+    <div class="ui-g-6">
+      <label>Local Variable</label>
+    </div>
+    <div class="ui-g-5">
+      <input type="text" style="width: 75px" pInputText [(ngModel)]="localVar">
+    </div>
+    <div class="ui-g-1">
+      <i class="fa fa-plus" style="float: right ; padding: 9px 4px;" title="Add Local Variable"
+        (click)="addLocalVar()"></i>
+    </div>
+  </div>
+</p-dialog>
+<!-- </p-accordionTab>
+</p-accordion> -->

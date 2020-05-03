@@ -1,0 +1,13 @@
+{
+    "nodes": [
+        {
+            "id": "start",
+            "type": "start",
+            "text": "Start",
+            "left: 200,
+            top: 50,
+            "w": 100,
+            "h": 70
+        }
+    ]
+}

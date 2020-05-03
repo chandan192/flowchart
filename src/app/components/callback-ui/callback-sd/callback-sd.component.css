@@ -1,0 +1,35 @@
+mat-sidenav-content {
+  margin-left: 0 !important;
+  flex: 1 1 auto;
+}
+
+mat-sidenav {
+  flex: 0 1 auto;
+}
+
+:host>>>.jtk-miniview {}
+
+:host>>>.controls {}
+
+:host>>>.flowchart-object .node-edit {
+  left: 10%;
+  margin-left: 0px;
+}
+
+:host>>>.flowchart-object .node-delete {
+  right: 10%;
+  left: auto;
+  margin-left: 0px;
+}
+
+:host>>>.jtk-surface-selected-element {
+  box-shadow: 0 2px 5px 5px grey;
+  z-index: 101;
+  border-radius: 50%;
+}
+
+:host>>>.flowchart-object .node-action {
+  top: 24%;
+  color: black;
+
+}
