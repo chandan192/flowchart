@@ -7,6 +7,7 @@ import { CallbackDataServiceService } from './../../../services/callback-data-se
 import { MetadataService } from './../../../services/metadata.service';
 import { NvhttpService } from './../../../services/nvhttp.service';
 
+import { ConfirmationService } from 'primeng/api';
 // import { NVBreadCrumbService } from './../../../services/nvbreadcrumb.service';
 // import { BreadCrumbInfo } from './../../../interfaces/breadcrumbinfo';
 
@@ -24,7 +25,8 @@ interface ICallbacks {
 @Component({
   selector: 'app-callback-designer',
   templateUrl: './callback-designer.component.html',
-  styleUrls: ['./callback-designer.component.css']
+  styleUrls: ['./callback-designer.component.css'],
+  providers: [ConfirmationService]
 })
 
 export class CallbackDesignerComponent implements OnInit {
@@ -69,7 +71,7 @@ export class CallbackDesignerComponent implements OnInit {
   showLoader: boolean;
   // breadInfo: BreadCrumbInfo;
 
-  constructor(private httpService: NvhttpService, private cbService: CallbackDataServiceService, private snackBar: MatSnackBar, private metaDataService: MetadataService) {
+  constructor(private httpService: NvhttpService, private cbService: CallbackDataServiceService, private snackBar: MatSnackBar, private metaDataService: MetadataService, private confirmationService: ConfirmationService) {
 
     this.onTriggerEvents = [
       { label: 'Page Ready', value: 1 },
@@ -511,21 +513,35 @@ export class CallbackDesignerComponent implements OnInit {
 
   deleteCallback(callbackid) {
     console.log('deleteCallback Function called : ', callbackid);
-    this.showLoader = true;
 
-    this.httpService.deleteCallback(callbackid).subscribe(res => {
-      this.showLoader = false;
-      console.log('deleteCallback Function , response : ', res);
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this callback?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
 
-      if (res === true) {
-        alert('Callback deleted successfully.');
-        this.getCallback(null);
+      accept: () => {
+        this.showLoader = true;
+
+        this.httpService.deleteCallback(callbackid).subscribe(res => {
+          this.showLoader = false;
+          console.log('deleteCallback Function , response : ', res);
+
+          if (res === true) {
+            alert('Callback deleted successfully.');
+            this.getCallback(null);
+          }
+        },
+          err => {
+            this.showLoader = false;
+            alert('Unable to delete callback.');
+          });
+      },
+      reject: () => {
+
       }
-    },
-      err => {
-        this.showLoader = false;
-        alert('Unable to delete callback.');
-      });
+    });
+
+
   }
 
   applyCallback() {

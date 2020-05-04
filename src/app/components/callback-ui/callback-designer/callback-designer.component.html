@@ -99,6 +99,9 @@
   </mat-sidenav-content>
 </mat-sidenav-container>
 
+<p-confirmDialog [baseZIndex]="10000">
+</p-confirmDialog>
+
 <!-- AddCallback Popup -->
 <p-dialog header="Add Callback" [modal]="true" appendTo="body" [contentStyle]="{'overflow':'visible'}"
   [(visible)]="AddCallbackDialog" [style]="{width: '470px', minWidth: '370px' , minHeight: 'fit-content'}"

@@ -36,6 +36,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ToolbarModule } from 'primeng/toolbar';
 import { InputMaskModule } from 'primeng/inputmask';
 import { MenuModule } from 'primeng/menu';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 
 import { CallbackDesignerComponent } from './components/callback-ui/callback-designer/callback-designer.component';
@@ -56,7 +57,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   imports: [BrowserModule, HttpClientModule, CommonModule, BrowserAnimationsModule, jsPlumbToolkitModule, ROUTING, FormsModule, ReactiveFormsModule,
-    InputTextModule, DropdownModule, FieldsetModule, DialogModule, ToolbarModule, ButtonModule, TabViewModule, SidebarModule,
+    InputTextModule, DropdownModule, FieldsetModule, DialogModule, ToolbarModule, ButtonModule, TabViewModule, SidebarModule, ConfirmDialogModule,
     MatDividerModule, MatButtonModule, AccordionModule, TreeModule, ListboxModule, PanelMenuModule, MatSidenavModule, MultiSelectModule, MatDialogModule, MatCardModule, MatSnackBarModule, MatListModule, MatMenuModule, MenubarModule, TieredMenuModule, DragDropModule, InputMaskModule, MenuModule],
   declarations: [AppComponent, QuestionNodeComponent, ActionNodeComponent, StartNodeComponent, OutputNodeComponent,
     DatasetComponent, ControlsComponent, CallbackSdComponent,

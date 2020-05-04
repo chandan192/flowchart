@@ -25,11 +25,11 @@ export class NvhttpService {
 
 
   // for testing set machine ip,port,protocol
-  ip = '10.20.0.66';
-  port = '8443';
+  ip = '10.20.0.53';
+  port = '8029';
   // ip = '10.20.0.64';
   // port = '8005';
-  protocol = 'https';
+  protocol = 'http';
 
   http: HttpClient;
   // TODO: Move this in a seperate file and add as provider.
