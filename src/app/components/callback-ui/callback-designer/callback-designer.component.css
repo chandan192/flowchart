@@ -9,8 +9,7 @@
   border-radius: 3px;
 }
 
-:host>>>.mat-drawer-backdrop,
-.mat-drawer-shown {
+:host>>>.mat-drawer-backdrop, .mat-drawer-shown {
   visibility: hidden !important;
 }
 
@@ -133,4 +132,8 @@
   top: -13px;
   font-size: 11px;
   position: relative;
+}
+
+:host>>>.ui-widget-overlay {
+  z-index: auto !important;
 }
