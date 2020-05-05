@@ -27,9 +27,22 @@
       </div>
 
       <div class="ui-g-12">
-        <!-- <p-panelMenu [model]="callbackItems" [multiple]="false"></p-panelMenu> -->
-        <p-tree [value]="callbackItems" selectionMode="single" [filter]="true" (onNodeSelect)="nodeSelect($event)">
-        </p-tree>
+        <p-orderList [value]="callbackItems" [listStyle]="{'height':'250px'}" filter="filter" filterBy="label"
+          styleClass="sdcallback" [(selection)]="selectedItem">
+
+          <ng-template let-callbackItem pTemplate="item">
+
+            <div style="overflow: hidden;text-overflow: ellipsis;" (click)="selectedCallback(callbackItem.value)"
+              title="{{callbackItem.value.name}}">
+              <span>{{callbackItem.label}}</span>
+              <i class="fa fa-trash" style="float: right;line-height: 1.4;"
+                (click)="deleteCallback(callbackItem.value.callbackid)" title="delete callback">
+              </i>
+            </div>
+
+          </ng-template>
+
+        </p-orderList>
       </div>
     </div>
 

@@ -51,12 +51,13 @@ import { MatCardModule } from '@angular/material/card';
 import { CallbackSdTriggerActionComponent } from './components/callback-ui/callback-sd/callback-sd-trigger-action/callback-sd-trigger-action.component';
 import { FlowchartCommonComponent } from './components/callback-ui/flowchart-common/flowchart-common.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { OrderListModule } from 'primeng/orderlist';
 
 
 
 @NgModule({
   imports: [BrowserModule, HttpClientModule, CommonModule, BrowserAnimationsModule, jsPlumbToolkitModule, ROUTING, FormsModule, ReactiveFormsModule,
-    InputTextModule, DropdownModule, FieldsetModule, DialogModule, ToolbarModule, ButtonModule, TabViewModule, SidebarModule, ConfirmDialogModule,
+    InputTextModule, DropdownModule, FieldsetModule, DialogModule, ToolbarModule, ButtonModule, TabViewModule, SidebarModule, ConfirmDialogModule, OrderListModule,
     MatDividerModule, MatButtonModule, AccordionModule, TreeModule, ListboxModule, PanelMenuModule, MatSidenavModule, MultiSelectModule, MatDialogModule, MatCardModule, MatSnackBarModule, MatListModule, MatMenuModule, MenubarModule, TieredMenuModule, DragDropModule, InputMaskModule, MenuModule],
   declarations: [AppComponent, QuestionNodeComponent, ActionNodeComponent, StartNodeComponent, OutputNodeComponent,
     DatasetComponent, ControlsComponent, CallbackSdComponent,

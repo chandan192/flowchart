@@ -6,7 +6,6 @@ import { Action, Callback, CallBackData, State } from './../../../interfaces/cal
 import { CallbackDataServiceService } from './../../../services/callback-data-service.service';
 import { MetadataService } from './../../../services/metadata.service';
 import { NvhttpService } from './../../../services/nvhttp.service';
-import { TreeNode } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 // import { NVBreadCrumbService } from './../../../services/nvbreadcrumb.service';
 // import { BreadCrumbInfo } from './../../../interfaces/breadcrumbinfo';
@@ -67,9 +66,10 @@ export class CallbackDesignerComponent implements OnInit {
   select: boolean;
   currentActionName: string = null;
   metadata: Metadata;
-  callbackItems: TreeNode[] = [];
+  callbackItems: any[] = [];
   showLoader: boolean;
-  selectedNode: TreeNode;
+  selectedItem: any[] = [{}];
+
   // breadInfo: BreadCrumbInfo;
 
   constructor(private httpService: NvhttpService, private cbService: CallbackDataServiceService, private snackBar: MatSnackBar, private metaDataService: MetadataService, private confirmationService: ConfirmationService) {
@@ -260,41 +260,41 @@ export class CallbackDesignerComponent implements OnInit {
 
       for (const i of this.callbackList) {
         this.callbackItems.push({
-          label: i.name,
-          icon: 'pi pi-trash',
-          styleClass: 'sdcallback',
-          data: i,
+          label: i.name, value: i,
+          // icon: 'pi pi-trash',
+          // styleClass: 'sdcallback',
+          // data: i,
         });
       }
 
-      setTimeout(() => {
-        this.setDeleteIcon();
-      }, 100);
-
       if (this.callbackList.length === 0) {
+        let emptymessage = document.querySelector('.ui-orderlist-list') as HTMLElement;
+        emptymessage.innerText = 'No records Found';
+        emptymessage.style.textAlign = 'center';
         return;
       }
 
       // select current callback.
 
       if (name === null) {
+        // highlight the first callback
+        this.selectedItem[0] = this.callbackItems[0];
         this.callbackEntry = this.callbackList[0];
-        this.callbackItems[0].expanded = true;
         this.callback = JSON.parse(this.callbackEntry.jsondata.toString());
         this.deserializeActionMap(this.callback);
         // this.cbService.setCallback(this.callback);
         // return true;
       } else {
 
-        // highlight the selected callback
         for (const cb of this.callbackList) {
-          this.callbackItems.forEach(item => {
-            if (item.label === name) {
-              item.expanded = true;
-            }
-          });
-
           if (cb.name === name) {
+            // highlight the selected item
+            this.callbackItems.forEach(item => {
+              if (item.value === cb) {
+                this.selectedItem[0] = item;
+              }
+            });
+
             this.callbackEntry = cb;
             console.log('callbackEntry----------', this.callbackEntry);
             this.callback = JSON.parse(cb.jsondata.toString());
@@ -311,19 +311,6 @@ export class CallbackDesignerComponent implements OnInit {
     // this.callbackService.broadcast('change', this.callbackService.callbackObj);
   }
 
-  setDeleteIcon() {
-    const items = document.querySelectorAll('.sdcallback');
-    items.forEach(element => {
-      const x = element.children[0].children[0] as HTMLElement;
-      x.style.cssFloat = 'right';
-      x.setAttribute('title', 'delete callback');
-      x.addEventListener('click', () => {
-        const callbackid = element.children[0].id.split('_')[1];
-        console.log('callbackid : ', callbackid);
-        this.deleteCallback(callbackid);
-      });
-    });
-  }
 
   addCallbackData() {
 
@@ -430,6 +417,7 @@ export class CallbackDesignerComponent implements OnInit {
   }
 
   selectedCallback(callbackEntry) {
+    console.log('this.selectedItem : ', this.selectedItem);
     this.currentActionName = null;
     this.currentAction = null;
     this.visibleSidebar = false;
@@ -630,15 +618,6 @@ export class CallbackDesignerComponent implements OnInit {
     this.channel = null;
     this.profile = null;
     this.profiles = [];
-  }
-
-  nodeSelect(e) {
-    console.log('Node Selected : ', e);
-    this.selectedCallback(e.node.data);
-  }
-
-  nodeUnselect(e) {
-    console.log('Node Unselected : ', e);
   }
 
 }

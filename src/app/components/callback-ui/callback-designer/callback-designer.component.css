@@ -137,3 +137,15 @@
 :host>>>.ui-widget-overlay {
   z-index: auto !important;
 }
+
+:host>>>.ui-orderlist-controls {
+  display: none;
+}
+
+:host>>>.ui-orderlist-list-container {
+  width: 100%;
+}
+
+:host>>>.ui-orderlist .ui-orderlist-list {
+  height: auto !important;
+}
