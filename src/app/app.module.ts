@@ -10,7 +10,6 @@ import { Dialogs } from 'jsplumbtoolkit';
 import { ROUTING } from './app.routing';
 import { DatasetComponent } from './dataset';
 import { ControlsComponent } from './controls';
-import { TreeModule } from 'primeng/tree';
 import { ListboxModule } from 'primeng/listbox';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { MatListModule } from '@angular/material/list';
@@ -37,7 +36,7 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { InputMaskModule } from 'primeng/inputmask';
 import { MenuModule } from 'primeng/menu';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-
+import { TreeModule } from 'primeng/tree';
 
 import { CallbackDesignerComponent } from './components/callback-ui/callback-designer/callback-designer.component';
 import { CallbackFlowchartComponent } from './components/callback-ui/callback-flowchart/callback-flowchart.component';

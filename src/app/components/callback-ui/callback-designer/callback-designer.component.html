@@ -27,7 +27,9 @@
       </div>
 
       <div class="ui-g-12">
-        <p-panelMenu [model]="callbackItems" [multiple]="false"></p-panelMenu>
+        <!-- <p-panelMenu [model]="callbackItems" [multiple]="false"></p-panelMenu> -->
+        <p-tree [value]="callbackItems" selectionMode="single" [filter]="true" (onNodeSelect)="nodeSelect($event)">
+        </p-tree>
       </div>
     </div>
 

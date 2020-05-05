@@ -6,7 +6,7 @@ import { Action, Callback, CallBackData, State } from './../../../interfaces/cal
 import { CallbackDataServiceService } from './../../../services/callback-data-service.service';
 import { MetadataService } from './../../../services/metadata.service';
 import { NvhttpService } from './../../../services/nvhttp.service';
-
+import { TreeNode } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
 // import { NVBreadCrumbService } from './../../../services/nvbreadcrumb.service';
 // import { BreadCrumbInfo } from './../../../interfaces/breadcrumbinfo';
@@ -62,13 +62,14 @@ export class CallbackDesignerComponent implements OnInit {
   callbackList: CallBackData[];
   callbackEntry: CallBackData;
   newTriggerName: string = null;
-  visibleSidebar: boolean = false;
+  visibleSidebar = false;
   AddTriggerDialog = false;
   select: boolean;
   currentActionName: string = null;
   metadata: Metadata;
-  callbackItems: MenuItem[] = [];
+  callbackItems: TreeNode[] = [];
   showLoader: boolean;
+  selectedNode: TreeNode;
   // breadInfo: BreadCrumbInfo;
 
   constructor(private httpService: NvhttpService, private cbService: CallbackDataServiceService, private snackBar: MatSnackBar, private metaDataService: MetadataService, private confirmationService: ConfirmationService) {
@@ -262,11 +263,8 @@ export class CallbackDesignerComponent implements OnInit {
           label: i.name,
           icon: 'pi pi-trash',
           styleClass: 'sdcallback',
-          id: 'sdcallback_' + i['callbackid'],
-          command: (event: any) => {
-            this.selectedCallback(i);
-          }
-        })
+          data: i,
+        });
       }
 
       setTimeout(() => {
@@ -318,7 +316,7 @@ export class CallbackDesignerComponent implements OnInit {
     items.forEach(element => {
       const x = element.children[0].children[0] as HTMLElement;
       x.style.cssFloat = 'right';
-      x.setAttribute('title', 'delete callback')
+      x.setAttribute('title', 'delete callback');
       x.addEventListener('click', () => {
         const callbackid = element.children[0].id.split('_')[1];
         console.log('callbackid : ', callbackid);
@@ -379,7 +377,7 @@ export class CallbackDesignerComponent implements OnInit {
     }
 
     const callBackData = this.newMethod();
-    this.showLoader = true
+    this.showLoader = true;
     this.httpService.addCallbacks(callBackData).subscribe((response: any) => {
       this.showLoader = false;
       console.log('CBDATA', callBackData, 'response : ', response);
@@ -497,7 +495,7 @@ export class CallbackDesignerComponent implements OnInit {
         console.log('update callback ', res);
 
 
-        this.showLoader = false
+        this.showLoader = false;
 
         this.callback.dirty = false;
 
@@ -632,6 +630,15 @@ export class CallbackDesignerComponent implements OnInit {
     this.channel = null;
     this.profile = null;
     this.profiles = [];
+  }
+
+  nodeSelect(e) {
+    console.log('Node Selected : ', e);
+    this.selectedCallback(e.node.data);
+  }
+
+  nodeUnselect(e) {
+    console.log('Node Unselected : ', e);
   }
 
 }
