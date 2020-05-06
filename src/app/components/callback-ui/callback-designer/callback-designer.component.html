@@ -1,30 +1,68 @@
 <app-loader [busy]="showLoader" [z_index]="200"></app-loader>
 
 <p-toolbar>
-  <div class="topbar-left">
-    <i class="profilename">profile name</i>
-    <h2 class="h2style">{{callbackEntry?.profilename}}</h2>
+  <div class="topbar-left ui-g ui-fluid">
+    <div class="ui-g-9">
+      <button pButton type="button" icon="pi pi-plus" label="Add Callback" (click)="addCallback()"
+        title="add new callback"></button>
+    </div>
+    <div class="ui-g-2" style="padding-left: 0px;">
+      <button pButton type=" button" icon="pi pi-refresh" class="ui-button-warning" style="margin-right: 10px;"
+        (click)="refreshCallback()" title="refresh"></button>
+    </div>
+    <div class="ui-g-offset-1"></div>
   </div>
 
+  <ul class="toolbar-list">
+    <li>
+      <!-- channel -->
+      <i class="material-icons" title="profile name">person</i>&nbsp;
+      <span style="vertical-align: top;"> {{callbackEntry?.profilename}}</span>
+    </li>
+
+
+
+    <li>
+      <!-- channel -->
+      <i class="material-icons" title="channel">phonelink</i>&nbsp;
+      <ng-container *ngFor="let item of channels">
+        <span *ngIf="item.value == callbackEntry?.channel" style="vertical-align: top;">{{item.label}}</span>
+      </ng-container>
+    </li>
+
+    <li>
+      <!-- runAt -->
+      <i class="material-icons" title="runAt/ Execute on">directions_run</i>
+      <ng-container *ngFor="let item of onTriggerEvents">
+        <span *ngIf="item.value == callbackEntry?.type" style="vertical-align: top;"
+          title="{{'runAt: '+item.label}}">{{item.label}}</span>
+      </ng-container>
+    </li>
+
+    <li>
+      <!-- pages -->
+      <i class="material-icons" title="pages">insert_drive_file</i>
+      <span style="vertical-align: top;">{{pagesList(callbackEntry?.pageid)}}</span>
+    </li>
+  </ul>
+
   <div class="topbar-right" style="width: 235px;text-align: right;">
+
+
     <button pButton type="button" [icon]="opened ?'fa fa-angle-left':'fa fa-angle-right'" id="menu-button"
       (click)="sidenav.toggle()"></button>
     <button pButton type="button" label="Save" (click)="saveCallback()" style="margin-right: 5px;"
       title="save callback"></button>
     <button pButton type="button" label="Apply" class="ui-button-success" (click)="applyCallback()"
       style="margin-right: 5px;" title="apply callback"></button>
-    <button pButton type=" button" icon="pi pi-refresh" class="ui-button-warning" style="margin-right: 10px;"
-      (click)="refreshCallback()" title="refresh"></button>
+
   </div>
 </p-toolbar>
 
-<mat-sidenav-container style="top: 48px;">
+<mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" [(opened)]="opened">
     <div class="ui-g ui-fluid" style="width: 219px;">
-      <div class="ui-g-12">
-        <button pButton type="button" icon="pi pi-plus" label="Add Callback" (click)="addCallback()"
-          title="add new callback"></button>
-      </div>
+
 
       <div class="ui-g-12">
         <p-orderList [value]="callbackItems" [listStyle]="{'height':'250px'}" filter="filter" filterBy="label"
@@ -55,21 +93,6 @@
         <p-header>
           State Diagram for : {{callbackEntry?.name}}
 
-          <div style="float: right;">
-            <!-- channel -->
-            <i class="material-icons">phonelink</i>&nbsp;
-            <ng-container *ngFor="let item of channels">
-              <span *ngIf="item.value == callbackEntry?.channel" style="vertical-align: top;">{{item.label}}</span>
-            </ng-container>
-
-
-            <!-- runAt -->
-            <i class="material-icons">directions_run</i>
-            <ng-container *ngFor="let item of onTriggerEvents">
-              <span *ngIf="item.value == callbackEntry?.type" style="vertical-align: top;"
-                title="{{'runAt: '+item.label}}">{{item.label}}</span>
-            </ng-container>
-          </div>
         </p-header>
 
 

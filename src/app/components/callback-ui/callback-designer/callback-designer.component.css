@@ -9,7 +9,8 @@
   border-radius: 3px;
 }
 
-:host>>>.mat-drawer-backdrop, .mat-drawer-shown {
+:host>>>.mat-drawer-backdrop,
+.mat-drawer-shown {
   visibility: hidden !important;
 }
 
@@ -40,35 +41,6 @@
   height: 77vh;
 }
 
-.forms {
-  display: block;
-  width: 100%;
-}
-
-.forms label {
-  width: 35%;
-  margin: 5px 0px;
-  float: left;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-}
-
-.forms .input-box {
-  width: 65%;
-  margin: 5px 0px;
-  float: left;
-  display: flex;
-  align-items: center;
-}
-
-:host>>>.my-select .ui-multiselect-label {
-  margin: 0px !important;
-}
-
-:host>>>.button-outline {
-  font-size: 12px;
-}
 
 .text-hidden {
   cursor: pointer;
@@ -106,8 +78,6 @@
   float: left;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
   width: 235px;
-  height: 47px;
-  padding: 12px;
 }
 
 .topbar-right {
@@ -117,21 +87,9 @@
 
 :host>>>.ui-toolbar {
   padding: 0px;
-  position: fixed;
   z-index: 100;
   width: 100%;
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-}
-
-.h2style {
-  margin-top: -20px;
-  margin-bottom: 0px;
-}
-
-.profilename {
-  top: -13px;
-  font-size: 11px;
-  position: relative;
 }
 
 :host>>>.ui-widget-overlay {
@@ -148,4 +106,14 @@
 
 :host>>>.ui-orderlist .ui-orderlist-list {
   height: auto !important;
+}
+
+.toolbar-list {
+  float: left;
+  margin: 0;
+}
+
+ul.toolbar-list li {
+  display: inline-block;
+  padding: 9px 16px;
 }

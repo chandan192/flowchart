@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Action, ActionData, Callback, State, Trigger } from './../../../../interfaces/callback';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-callback-sd-trigger-action',
@@ -33,8 +34,9 @@ export class CallbackSdTriggerActionComponent implements OnInit, OnChanges {
   triggerList: any[] = [];
   actionList: any = [];
   updateAction = false;
+  edit_trigger: boolean;
 
-  constructor() {
+  constructor(private confirmationService: ConfirmationService) {
     // this.listOfAction = this.callback.actions;
     this.listOfTrigger = [];
   }
@@ -155,6 +157,7 @@ export class CallbackSdTriggerActionComponent implements OnInit, OnChanges {
 
 
   addTriggerNode($event: any) {
+    this.edit_trigger = false;
     console.log('Trigger Added Successfully, event - ', $event);
     this.showTriggerDialog = false;
     this.newTriggerName = null;
@@ -220,6 +223,7 @@ export class CallbackSdTriggerActionComponent implements OnInit, OnChanges {
   }
 
   editTrigger(trigger) {
+    this.edit_trigger = true;
     console.log('edit trigger function called : ', trigger);
 
     this.showTriggerDialog = true;
@@ -231,13 +235,24 @@ export class CallbackSdTriggerActionComponent implements OnInit, OnChanges {
   deleteTrigger(triggerid) {
     console.log('delete trigger function called : ', triggerid);
 
-    this.callback.triggers.forEach((item, i) => {
-      if (item.id === triggerid) {
-        this.callback.triggers.splice(i, 1);
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this trigger?',
+      header: 'Delete Confirmation',
+      icon: 'pi pi-info-circle',
+
+      accept: () => {
+        this.callback.triggers.forEach((item, i) => {
+          if (item.id === triggerid) {
+            this.callback.triggers.splice(i, 1);
+          }
+        });
+
+        this.getTriggerList();
+      },
+      reject: () => {
+
       }
     });
-
-    this.getTriggerList();
   }
 
 

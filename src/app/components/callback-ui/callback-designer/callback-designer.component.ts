@@ -268,7 +268,7 @@ export class CallbackDesignerComponent implements OnInit {
       }
 
       if (this.callbackList.length === 0) {
-        let emptymessage = document.querySelector('.ui-orderlist-list') as HTMLElement;
+        const emptymessage = document.querySelector('.ui-orderlist-list') as HTMLElement;
         emptymessage.innerText = 'No records Found';
         emptymessage.style.textAlign = 'center';
         return;
@@ -618,6 +618,32 @@ export class CallbackDesignerComponent implements OnInit {
     this.channel = null;
     this.profile = null;
     this.profiles = [];
+  }
+
+  pagesList(ids: string): string {
+    let str = '';
+    if (ids !== null) {
+      if (ids === '-1') {
+        str = this.pages[0].label + ', ' + this.pages[1].label + ', ' + this.pages[2].label + ' and ' + (this.pages.length - 3) + ' more.';
+      } else {
+
+        const item = ids.split(',');
+        this.pages.forEach((page, i) => {
+          item.forEach((i, j) => {
+            if (page.value == i) {
+              item[j] = page.label;
+            }
+          });
+        });
+
+        if (item.length > 3) {
+          str = item[0] + ', ' + item[1] + ', ' + item[2] + ' and ' + (item.length - 3) + ' more. ';
+        } else {
+          str = item.join(', ');
+        }
+      }
+    }
+    return str;
   }
 
 }

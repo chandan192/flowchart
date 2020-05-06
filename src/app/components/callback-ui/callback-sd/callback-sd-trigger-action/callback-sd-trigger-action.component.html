@@ -74,9 +74,9 @@
 
 <div>
   <!-- <button type="button" (click)="openDialog()" pButton label="Open Dialog"></button>   -->
-  <p-dialog header="Add Trigger" [(visible)]="showTriggerDialog" appendTo="body" [contentStyle]="{'overflow':'visible'}"
-    [modal]="true" [responsive]="true" [style]="{width: '500px', minWidth: '250px'}" [minY]="70" [maximizable]="false"
-    [baseZIndex]="10000">
+  <p-dialog [header]="edit_trigger ?'Edit Trigger':'Add Trigger'" [(visible)]="showTriggerDialog" appendTo="body"
+    [contentStyle]="{'overflow':'visible'}" [modal]="true" [responsive]="true"
+    [style]="{width: '500px', minWidth: '250px'}" [minY]="70" [maximizable]="false" [baseZIndex]="10000">
     <app-sd-addtriggerdialog *ngIf="newTriggerName" [stateName]="stateName" [triggerName]="newTriggerName"
       (success)="addTriggerNode($event)"></app-sd-addtriggerdialog>
   </p-dialog>
